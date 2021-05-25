@@ -5,12 +5,15 @@ This project is a simple chatbot for the user to coduct a conversation with. Alt
 ## Initial Setup Stage (First Boot)
 
 1. Produce initial setup, where **age**, **gender**, and **location**, **occupation**, **creator** is collected.
-2. Store collected information in json file for future use.
+2. Save the information to a dictionary.
+3. Generate encryption key and save in a safe place.
+4. Encrypt the dictionary with the user's data.
+5. Store encrypted information in json file for future use.
 
 
 ## Continuous Working (After Initial Setup)
 
-1. Start By Displaying it's name and version number as well as it's creator (JJ aka Joel July).
+1. Start By Displaying the project name and version number as well as it's developer (JJ aka Joel July).
 2. Check if a json file that contains the user's personal info is present.
 3. If personal json file exsists and is not empty retreave information and proceed.
 4. Else repeat initial setup process. 
