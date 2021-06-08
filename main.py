@@ -16,17 +16,24 @@ dev = "JJuly"
 version = 1.0
 
 # All intents 
-
 question_intents = ["who","what","wht","qhat","ehat","shat","where","qhere","ehere","shere","wher","there","how","when","?", "wat","wen"]
-user_personal_intents=["my","me","i","mine","am","user","use"]
 non_personal_intents=["you","your","them","it"]
+user_personal_intents=["my","me","i","mine","am","user","use"]
+
+# --User Intents
 # Intents for the naming section
 # This is used to try diffenect ways of saying the same thing even with diffenent spellings.
 name_intents = ["name","bame","vame","hame","title","yitle","ritle","call","vall","xall"]
 age_intents = ["age","years","year","old","aged","living"]
 sex_intents = ["gender","sex","sexual","orientation"]
-location_intents = ["location","residence","live","place","stay","staying"]
+location_intents = ["location","residence","live","place","stay","staying","found"]
 
+# --ChatBot Intents
+chatbot_name_intents=["name","bame","vame","hame","title","yitle","ritle","call","vall","xall","label","version"]
+chatbot_age_intents=["age","years","year","old","aged","living"]
+chatbot_location_intents=["location","residence","live","place","stay","staying","where","found"]
+chatbot_sex_intents=["gender","sex","sexual","orientation"]
+chatbot_dev_intents=["dev","devs","div","sev","fev","xev","developers","developer","maker","creater","father","mother"]
 
 # Class for user data (Pending usage).
 # class person():
@@ -91,10 +98,20 @@ ps = PorterStemmer()
 user_query = ""
 print(name+"\nVersion: " + str(version))
 
+# Responses Lists
+# --User
+# Is used to when the user asks a question about themself.
 user_age_responces = ["You are {} years old".format(data["age"]),"Your age is {}".format(data['age'])]
 user_location_responces = ["You are {} years old".format(data["age"]),"Your age is {}".format(data['age'])]
 user_name_responces = ["Your name is {} {}".format(data["fname"],data["lname"]),"Is tis a trick question, you know I know you are {} {}".format(data["fname"],data["lname"])]
 user_sex_responses = ["Your gender is {}".format(data['sex']),"Your sex is {}".format(data['sex'])]
+
+# --Chatbot
+chatbot_name_responces = ["My name is Project Dream or Dream For short"]
+chatbot_location_responces = ["i live in side your computer.","I can be found on a componect inside your computer called ram or memory"]
+chatbot_sex_responces = ["I Have no gender","I am am a computer program with no gender","I am any gender you choose"]
+chatbot_age_responces = ["I am no more than a year old","I am immortal","I will live forever", "I have no age but i am versin {}".format(version)]
+chatbot_dev_responces = ["I was created by {}".format(dev),"I was invisioned and brought to life by {}".format(dev)]
 
 while(not(user_query == "end" or user_query == "exit" or user_query == "good-bye")):
     # print("Enter this Loop")
@@ -124,47 +141,66 @@ while(not(user_query == "end" or user_query == "exit" or user_query == "good-bye
             # Checking each intent form the questions list to see if it matches the user input.
             # If it matches then it moves on else prints a error that says it does not understand.
             if char == question:
-                # print(question)
+                
                 # If it is a question then it loops through the user input a second time to find out if the user is asking about themself or the chatbot.
                 for word1 in new_string:
-                    #sprint(word1)
+                    
                     # The user input is once again compared against each element in a intents list.
                     for user_specific in user_personal_intents:
-                        # print(user_specific)
+                        
 
                         # If the user is asking about themself then the responces are pulled from the personal file, added to the predefined responces list and displayed.
                         if word1 == user_specific:
-                            #print(word1==user_specific)
+                            
+                            # Once again we loop through a third time but this time we are checking for the main intent the user wishes to convey. 
                             for word2 in new_string:
-                                #print(word2)
+                                
+                                # The Uses input is looped through again.
                                 for name_intent in name_intents:
+
+                                    # If the user mentioned anything about names or any synonyme of name then it will enter else it go onto the other check.
                                     if word2 == name_intent:
                                         # print("in second if")
                                         #print("Dream: {} ".format(user_name_responces[0]))
+                                        
+                                        # If the user main intention is the name then a responce pertaining to the name is pulled from the name responses list.
                                         print(user_name_responces[0])
+                                        # After the answer is presented a break out of the loop occurs were the user is once again prompted for their input.
                                         break
-                                if word2 == "age" or word2 == "old":
-                                    # print("in second if")
-                                    # print("Dream: Your Age is {}.".format(
-                                        # data['age']))
-                                    print(user_age_responces[0])
-                                    break
-                                # if user_query == "how are you?":
-                                #     print("I am Fine, What about you?")
-                                #     break
+                                
+                                # At this point the process out lined above repeats with minimal changes.
+                                for age_intent in age_intents:
+
+                                    if word2 == age_intent:
+                                        print(user_age_responces[0])
+                                        break
+                                    
                     #The user_non_specific variable refers to things the user would ask the chatbot about itself 
                     for user_non_specific in non_personal_intents:
                     #Each word is compared to the one i the non_specific list to see if it matches both mispelling and possibilities.  
                         if word1 ==user_non_specific:
                             for word2 in new_string:
-                                if word2 == "name" or word2 == "title":
-                                    print("My name is the Project Dream but you could call me Dream for short.")
-                                    
-                                if word2 == "creator" or word2 == "maker":
-                                    print("something")
-                                if word2=="age" or word2=="years" or word2== "old":
-                                    print("I am 1 week old or version {}".format(version))
-                            # break
+                                for chatbot_name_intent in chatbot_name_intents:
+                                    if word2 == chatbot_name_intent:
+                                        print(chatbot_name_responces[0])
+                                        break
+                                for chatbot_age_intent in chatbot_age_intents:
+                                    if word2 == chatbot_age_intent:
+                                        print(chatbot_age_responces[0])
+                                        break
+                                for chatbot_sex_intent in chatbot_sex_intents:
+                                    if word2 == chatbot_sex_intent:
+                                        print(chatbot_sex_responces[0])
+                                        break
+                                for chatbot_location_intent in chatbot_location_intents:
+                                    if word2 == chatbot_location_intent:
+                                        print(chatbot_location_responces[0])
+                                        break
+                                for chatbot_dev_intent in chatbot_dev_intents:
+                                    if word2 == chatbot_dev_intent:
+                                        print(chatbot_dev_responces[0])
+                                        break
+                                
             elif char == "hi":
                 # Handles the Greetings
                 print("Hello")
