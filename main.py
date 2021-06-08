@@ -3,6 +3,7 @@ import json
 import os
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
+import random
 
 # Idea for later: encrypting and pickling the data out
 # Idea for later: prompt for nickname or username
@@ -17,6 +18,8 @@ version = 1.0
 
 # If a response has been found
 responded=False
+# Ends the Entire Program or the While Loop
+finalEnd=True
 
 # All intents 
 question_intents = ["who","what","wht","qhat","ehat","shat","where","qhere","ehere","shere","wher","there","how","when","?", "wat","wen"]
@@ -37,6 +40,16 @@ chatbot_age_intents=["age","years","year","old","aged","living"]
 chatbot_location_intents=["location","residence","live","place","stay","staying","where","found"]
 chatbot_sex_intents=["gender","sex","sexual","orientation"]
 chatbot_dev_intents=["dev","devs","div","sev","fev","xev","developers","developer","maker","creater","father","mother"]
+
+
+# Greetings Intents 
+
+greeting_intents = ["hello","hi","hola","howdy","hey","yo"]
+
+# End intents
+
+end_intents = ["end", "goodbye","bye","later","until","exit"]
+
 
 # Class for user data (Pending usage).
 # class person():
@@ -104,19 +117,32 @@ print(name+"\nVersion: " + str(version))
 # Responses Lists
 # --User
 # Is used to when the user asks a question about themself.
-user_age_responces = ["You are {} years old".format(data["age"]),"Your age is {}".format(data['age'])]
-user_location_responces = ["You are {} years old".format(data["age"]),"Your age is {}".format(data['age'])]
-user_name_responces = ["Your name is {} {}".format(data["fname"],data["lname"]),"Is tis a trick question, you know I know you are {} {}".format(data["fname"],data["lname"])]
-user_sex_responses = ["Your gender is {}".format(data['sex']),"Your sex is {}".format(data['sex'])]
+user_age_responses = ["Dream: You are {} years old".format(data["age"]),"Dream: Your age is {}".format(data['age'])]
+user_location_responses = ["Dream: You Live nn/at {}.".format(data["location"])]
+user_name_responses = ["Dream: Your name is {} {}".format(data["fname"],data["lname"]),"Dream: Is tis a trick question, you know I know you are {} {}".format(data["fname"],data["lname"])]
+user_sex_responses = ["Dream: Your gender is {}".format(data['sex']),"Dream: Your sex is {}".format(data['sex'])]
 
 # --Chatbot
-chatbot_name_responces = ["My name is Project Dream or Dream For short"]
-chatbot_location_responces = ["i live in side your computer.","I can be found on a componect inside your computer called ram or memory"]
-chatbot_sex_responces = ["I Have no gender","I am am a computer program with no gender","I am any gender you choose"]
-chatbot_age_responces = ["I am no more than a year old","I am immortal","I will live forever", "I have no age but i am versin {}".format(version)]
-chatbot_dev_responces = ["I was created by {}".format(dev),"I was invisioned and brought to life by {}".format(dev)]
+chatbot_name_responses = ["Dream: My name is Project Dream or Dream For short"]
+chatbot_location_responses = ["Dream: I live inside your computer.","Dream: I can be found on a componect inside your computer called ram or memory"]
+chatbot_sex_responses = ["Dream: I Have no gender","I am am a computer program with no gender","Dream: I am any gender you choose"]
+chatbot_age_responses = ["Dream: I am no more than a year old","Dream: I am immortal","I will live forever", "Dream: I have no age but i am versin {}".format(version)]
+chatbot_dev_responses = ["Dream: I was created by {}".format(dev),"Dream: I was invisioned and brought to life by {}".format(dev),"Dream: It was {} Who Created me".format(dev)]
 
-while(not(user_query == "end" or user_query == "exit" or user_query == "good-bye")):
+
+# Greetings Responses
+
+greeting_responses = ["Hello","Longtime no talk","Good to interact with you again","Good to see you","Hey!!!!","Who is this? lol ,just kidding :)"]
+
+# End Responses
+
+end_responses = ["Great Talk","GoodBye","Later","Bye","Until we meet again","Love You!","Take Care of yourself", "Remember to social distance","Stay Safe"]
+
+# Don't Understand Responces
+
+dont_undestand_responses = ["I don't understand", "What was that?", "Sorry I don't think i know how to answer that.","Please try again after I have been updated.","Try again, But simpler please","Please ask a easier question","Sorry I Don't Know","My Database Doesn't Contain the answer to that."]
+
+while(finalEnd):
     # print("Enter this Loop")
     responded=False
 
@@ -163,10 +189,10 @@ while(not(user_query == "end" or user_query == "exit" or user_query == "good-bye
                                 for name_intent in name_intents:
 
                                     # If the user mentioned anything about names or any synonyme of name then it will enter else it go onto the other check.
-                                    if word2 == name_intent:
+                                    if word2 == name_intent and responded==False:
                                         
                                         # If the user main intention is the name then a responce pertaining to the name is pulled from the name responses list.
-                                        print(user_name_responces[0])
+                                        print(random.choice(user_name_responses))
                                         responded=True
                                         # After the answer is presented a break out of the loop occurs were the user is once again prompted for their input.
                                         break
@@ -174,11 +200,22 @@ while(not(user_query == "end" or user_query == "exit" or user_query == "good-bye
                                 # At this point the process out lined above repeats with minimal changes.
                                 for age_intent in age_intents:
 
-                                    if word2 == age_intent:
-                                        print(user_age_responces[0])
+                                    if word2 == age_intent and responded==False:
+                                        print(random.choice(user_age_responses))
                                         responded=True
                                         break
-                                    
+                                for location_intent in location_intents:
+
+                                    if word2 == location_intent and responded==False:
+                                        print(random.choice(user_location_responses))
+                                        responded=True
+                                        break
+                                for sex_intent in sex_intents:
+
+                                    if word2 == sex_intent and responded==False:
+                                        print(random.choice(user_sex_responses))
+                                        responded=True
+                                        break
                     #The user_non_specific variable refers to things the user would ask the chatbot about itself 
                     for user_non_specific in non_personal_intents:
 
@@ -186,46 +223,53 @@ while(not(user_query == "end" or user_query == "exit" or user_query == "good-bye
                         if word1 ==user_non_specific:
                             for word2 in new_string:
                                 for chatbot_name_intent in chatbot_name_intents:
-                                    if word2 == chatbot_name_intent:
-                                        print(chatbot_name_responces[0])
+                                    if word2 == chatbot_name_intent and responded==False:
+                                        print(random.choice(chatbot_name_responses))
                                         responded=True
                                         break
                                 for chatbot_age_intent in chatbot_age_intents:
-                                    if word2 == chatbot_age_intent:
-                                        print(chatbot_age_responces[0])
+                                    if word2 == chatbot_age_intent and responded==False:
+                                        print(random.choice(chatbot_age_responses))
                                         responded=True
                                         break
                                 for chatbot_sex_intent in chatbot_sex_intents:
-                                    if word2 == chatbot_sex_intent:
-                                        print(chatbot_sex_responces[0])
+                                    if word2 == chatbot_sex_intent and responded==False:
+                                        print(random.choice(chatbot_sex_responses))
                                         responded=True
                                         break
                                 for chatbot_location_intent in chatbot_location_intents:
-                                    if word2 == chatbot_location_intent:
-                                        print(chatbot_location_responces[0])
+                                    if word2 == chatbot_location_intent and responded==False:
+                                        
+                                        print(random.choice(chatbot_location_responses))
                                         responded=True
                                         break
                                 for chatbot_dev_intent in chatbot_dev_intents:
-                                    if word2 == chatbot_dev_intent:
-                                        print(chatbot_dev_responces[0])
+                                    if word2 == chatbot_dev_intent and responded==False:
+                                        print(random.choice(chatbot_dev_responses))
                                         responded=True
                                         break
                                 # break
                                 
-            elif char == "hi":
-                # Handles the Greetings
-                print("Hello")
+            for greeting_intent in greeting_intents:
+                # Handles the Greetings    
+                if char == greeting_intent:
+                    print("Dream: {}".format(random.choice(greeting_responses)))
+                    responded=True
+                    break
+            for end_intent in end_intents:
+                if char == end_intent:
+                    # Handles the End greetings
+                    print("Dream: {}".format(random.choice(end_responses)))
+                    responded=True
+                    finalEnd=False
+                    break
+            #breaks the loop if a response is found.
+            if(responded):
                 break
-            elif char == "end":
-                # Handles the End greetings
-                print("GoodBye")
-                responded=True
-                break
-            
         # If the User input is not in the intents or database
         if(responded):
             # print("found response")
             break;
         else:
-            print("I do not understand")
+            print("Dream: {}".format(random.choice(dont_undestand_responses)))
             break
