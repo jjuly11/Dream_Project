@@ -15,6 +15,9 @@ name = 'Dream Project'
 dev = "JJuly"
 version = 1.0
 
+# If a response has been found
+responded=False
+
 # All intents 
 question_intents = ["who","what","wht","qhat","ehat","shat","where","qhere","ehere","shere","wher","there","how","when","?", "wat","wen"]
 non_personal_intents=["you","your","them","it"]
@@ -115,6 +118,7 @@ chatbot_dev_responces = ["I was created by {}".format(dev),"I was invisioned and
 
 while(not(user_query == "end" or user_query == "exit" or user_query == "good-bye")):
     # print("Enter this Loop")
+    responded=False
 
     user_query = input("Dream: Ask me something else \n{} {}: ".format(
         data['fname'], data['lname']))
@@ -160,11 +164,10 @@ while(not(user_query == "end" or user_query == "exit" or user_query == "good-bye
 
                                     # If the user mentioned anything about names or any synonyme of name then it will enter else it go onto the other check.
                                     if word2 == name_intent:
-                                        # print("in second if")
-                                        #print("Dream: {} ".format(user_name_responces[0]))
                                         
                                         # If the user main intention is the name then a responce pertaining to the name is pulled from the name responses list.
                                         print(user_name_responces[0])
+                                        responded=True
                                         # After the answer is presented a break out of the loop occurs were the user is once again prompted for their input.
                                         break
                                 
@@ -173,33 +176,41 @@ while(not(user_query == "end" or user_query == "exit" or user_query == "good-bye
 
                                     if word2 == age_intent:
                                         print(user_age_responces[0])
+                                        responded=True
                                         break
                                     
                     #The user_non_specific variable refers to things the user would ask the chatbot about itself 
                     for user_non_specific in non_personal_intents:
+
                     #Each word is compared to the one i the non_specific list to see if it matches both mispelling and possibilities.  
                         if word1 ==user_non_specific:
                             for word2 in new_string:
                                 for chatbot_name_intent in chatbot_name_intents:
                                     if word2 == chatbot_name_intent:
                                         print(chatbot_name_responces[0])
+                                        responded=True
                                         break
                                 for chatbot_age_intent in chatbot_age_intents:
                                     if word2 == chatbot_age_intent:
                                         print(chatbot_age_responces[0])
+                                        responded=True
                                         break
                                 for chatbot_sex_intent in chatbot_sex_intents:
                                     if word2 == chatbot_sex_intent:
                                         print(chatbot_sex_responces[0])
+                                        responded=True
                                         break
                                 for chatbot_location_intent in chatbot_location_intents:
                                     if word2 == chatbot_location_intent:
                                         print(chatbot_location_responces[0])
+                                        responded=True
                                         break
                                 for chatbot_dev_intent in chatbot_dev_intents:
                                     if word2 == chatbot_dev_intent:
                                         print(chatbot_dev_responces[0])
+                                        responded=True
                                         break
+                                # break
                                 
             elif char == "hi":
                 # Handles the Greetings
@@ -208,7 +219,13 @@ while(not(user_query == "end" or user_query == "exit" or user_query == "good-bye
             elif char == "end":
                 # Handles the End greetings
                 print("GoodBye")
-            else:
-                # If the User input is not in the intents or database
-                print("I do not understand")
+                responded=True
                 break
+            
+        # If the User input is not in the intents or database
+        if(responded):
+            # print("found response")
+            break;
+        else:
+            print("I do not understand")
+            break
