@@ -1,8 +1,8 @@
 #!/bin/env python3
 import json
 import os
-# from nltk.tokenize import word_tokenize
-# from nltk.stem import PorterStemmer
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
 
 # Idea for later: encrypting and pickling the data out
 # Idea for later: prompt for nickname or username
@@ -87,7 +87,7 @@ with open('data/personal.json', 'r') as personal_data:
     # Open For Reading
     data = json.load(personal_data)
     # print(data)
-# ps = PorterStemmer()
+ps = PorterStemmer()
 user_query = ""
 print(name+"\nVersion: " + str(version))
 
@@ -103,22 +103,36 @@ while(not(user_query == "end" or user_query == "exit" or user_query == "good-bye
         data['fname'], data['lname']))
     # normalize text
     user_query = user_query.lower()
+    
     # print(user_query)
     # print(user_query == "end")
 
-    new_string = user_query.split(' ')
-    # new_string = word_tokenize(user_query)
+    # new_string = user_query.split(' ')
+
+    # Using the nltk tokenizer to conver the user input string into a list. 
+    new_string = word_tokenize(user_query)
 
     for char in new_string:
-        # word = ps.stem(char)
-        print(char)
+        # Loops through the list of the user's input that was converted to list.
+        # While at the same time the saves a element of the list to the variable char.
+        # Uses the nltk stemmer to reduce each word to its root word
+        word = ps.stem(char)
+        # print(char)
+
+        # Loops through the questions intents list
         for question in question_intents:
+            # Checking each intent form the questions list to see if it matches the user input.
+            # If it matches then it moves on else prints a error that says it does not understand.
             if char == question:
-                print(question)
+                # print(question)
+                # If it is a question then it loops through the user input a second time to find out if the user is asking about themself or the chatbot.
                 for word1 in new_string:
                     #sprint(word1)
+                    # The user input is once again compared against each element in a intents list.
                     for user_specific in user_personal_intents:
                         # print(user_specific)
+
+                        # If the user is asking about themself then the responces are pulled from the personal file, added to the predefined responces list and displayed.
                         if word1 == user_specific:
                             #print(word1==user_specific)
                             for word2 in new_string:
@@ -134,7 +148,7 @@ while(not(user_query == "end" or user_query == "exit" or user_query == "good-bye
                                     # print("Dream: Your Age is {}.".format(
                                         # data['age']))
                                     print(user_age_responces[0])
-                                    breaks
+                                    break
                                 # if user_query == "how are you?":
                                 #     print("I am Fine, What about you?")
                                 #     break
@@ -151,3 +165,14 @@ while(not(user_query == "end" or user_query == "exit" or user_query == "good-bye
                                 if word2=="age" or word2=="years" or word2== "old":
                                     print("I am 1 week old or version {}".format(version))
                             # break
+            elif char == "hi":
+                # Handles the Greetings
+                print("Hello")
+                break
+            elif char == "end":
+                # Handles the End greetings
+                print("GoodBye")
+            else:
+                # If the User input is not in the intents or database
+                print("I do not understand")
+                break
