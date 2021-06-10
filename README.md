@@ -1,6 +1,13 @@
 # Chatbot Psuedo Code (**Project Dream**)
 
-This project is a simple chatbot for the user to coduct a conversation with. Althought simple this chatbot nicknamed Dream is robust and is able to handle multi meaning worlds and answer appropriately, If an answer isn't avaliable then it produces a generic message stating that it doesn't understand the statement. Dream uses simple encryption to save user data.
+This project is a simple chatbot for the user to conduct a conversation with. Althought simple this chatbot nicknamed Dream is robust and is able to handle multi meaning worlds and answer appropriately, If an answer isn't avaliable then it produces a random select message from its database stating that it doesn't understand the query. Dream Has a simple cli that allows the user to enter querys from 5 categories of which the question can be directed to the chatbot or asking the chatbot about the user themself.
+
+##Feature List
++ Encrypts User Data
++ Is able to carry out a simple simple conversation based on 5 categories.
++ Very lightweight
++ Offers simple typo detection
++ Can recognize a small number of synonyms
 
 ## Initial Setup Stage (First Boot)
 
@@ -13,6 +20,7 @@ This project is a simple chatbot for the user to coduct a conversation with. Alt
 
 ## Continuous Working (After Initial Setup)
 
+1. Present the user with a start screen where they could either choose to re-enter there user data or continue as is. 
 1. Start By Displaying the project name and version number as well as it's developer (JJ aka Joel July).
 2. Check if a json file that contains the user's personal info is present.
 3. If personal json file exsists and is not empty retreave information and proceed.
