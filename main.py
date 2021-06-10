@@ -29,17 +29,19 @@ user_personal_intents=["my","me","i","mine","am","user","use"]
 # --User Intents
 # Intents for the naming section
 # This is used to try diffenect ways of saying the same thing even with diffenent spellings.
-name_intents = ["name","bame","vame","hame","title","yitle","ritle","call","vall","xall"]
-age_intents = ["age","years","year","old","aged","living"]
-sex_intents = ["gender","sex","sexual","orientation"]
-location_intents = ["location","residence","live","place","stay","staying","found"]
+name_intents = ["name","bame","vame","hame","title","yitle","ritle","call","vall","xall","?","/"]
+age_intents = ["age","years","year","old","aged","living","?","/"]
+sex_intents = ["gender","sex","sexual","orientation","?","/"]
+location_intents = ["location","residence","live","place","stay","staying","found","?","/"]
+occupation_intents = ["do","do?","do/","d0","d0?","d0/","work","work?","work/","w0rk","w0rk?","w0rk/","occupation","0ccupation","function","function?","function/","functi0n?","functi0n/","?","/"]
 
 # --ChatBot Intents
-chatbot_name_intents=["name","bame","vame","hame","title","yitle","ritle","call","vall","xall","label","version"]
-chatbot_age_intents=["age","years","year","old","aged","living"]
-chatbot_location_intents=["location","residence","live","place","stay","staying","where","found"]
-chatbot_sex_intents=["gender","sex","sexual","orientation"]
-chatbot_dev_intents=["dev","devs","div","sev","fev","xev","developers","developer","maker","creater","father","mother"]
+chatbot_name_intents=["name","bame","name?","name/","vame","hame","title","title?","title?","yitle","ritle","call","vall","xall","label","version","?","/"]
+chatbot_age_intents=["age","age/","age?","years","years/","years?","year","year/","year?","year>","year\\","old","0ld","old?","old/","old\"","aged","aged?","aged/","living","living?","living/","?","/"]
+chatbot_location_intents=["location","locati0n","locati0n?","locati0n/","location?","location/","residence","residence?","residence/","live","live?","live/","living","place","stay","staying","where","found","?","/"]
+chatbot_sex_intents=["gender","sex","sexual","orientation","?","/"]
+chatbot_dev_intents=["dev","devs","div","sev","fev","xev","developers","developer","maker","creator","father","mother","?","/"]
+chatbot_occupation_intents=["do","do?","do/","d0","d0?","d0/","work","work?","work/","w0rk","w0rk?","w0rk/","occupation","0ccupation","function","function?","function/","functi0n?","functi0n/","job","j0b","?","/"]
 
 
 # Greetings Intents 
@@ -117,10 +119,12 @@ print(name+"\nVersion: " + str(version))
 # Responses Lists
 # --User
 # Is used to when the user asks a question about themself.
+# Generates a custom response based on the user personal data collected.
 user_age_responses = ["Dream: You are {} years old".format(data["age"]),"Dream: Your age is {}".format(data['age'])]
 user_location_responses = ["Dream: You Live nn/at {}.".format(data["location"])]
 user_name_responses = ["Dream: Your name is {} {}".format(data["fname"],data["lname"]),"Dream: Is tis a trick question, you know I know you are {} {}".format(data["fname"],data["lname"])]
 user_sex_responses = ["Dream: Your gender is {}".format(data['sex']),"Dream: Your sex is {}".format(data['sex'])]
+user_occupation_responses = ["You are a {}".format(data["occupation"]),"You do {}".format(data["occupation"])]
 
 # --Chatbot
 chatbot_name_responses = ["Dream: My name is Project Dream or Dream For short"]
@@ -128,6 +132,7 @@ chatbot_location_responses = ["Dream: I live inside your computer.","Dream: I ca
 chatbot_sex_responses = ["Dream: I Have no gender","I am am a computer program with no gender","Dream: I am any gender you choose"]
 chatbot_age_responses = ["Dream: I am no more than a year old","Dream: I am immortal","I will live forever", "Dream: I have no age but i am versin {}".format(version)]
 chatbot_dev_responses = ["Dream: I was created by {}".format(dev),"Dream: I was invisioned and brought to life by {}".format(dev),"Dream: It was {} Who Created me".format(dev)]
+chatbot_occupation_responses = ["I am a program create to emulate a conversations","I am here to speak to you","My Job is to speak to you."]
 
 
 # Greetings Responses
@@ -216,6 +221,12 @@ while(finalEnd):
                                         print(random.choice(user_sex_responses))
                                         responded=True
                                         break
+                                for occupation_intent in occupation_intents:
+
+                                    if word2 == occupation_intent and responded==False:
+                                        print("Dream: "+random.choice(user_occupation_responses))
+                                        responded=True
+                                        break
                     #The user_non_specific variable refers to things the user would ask the chatbot about itself 
                     for user_non_specific in non_personal_intents:
 
@@ -223,6 +234,7 @@ while(finalEnd):
                         if word1 ==user_non_specific:
                             for word2 in new_string:
                                 for chatbot_name_intent in chatbot_name_intents:
+                                    
                                     if word2 == chatbot_name_intent and responded==False:
                                         print(random.choice(chatbot_name_responses))
                                         responded=True
@@ -239,7 +251,6 @@ while(finalEnd):
                                         break
                                 for chatbot_location_intent in chatbot_location_intents:
                                     if word2 == chatbot_location_intent and responded==False:
-                                        
                                         print(random.choice(chatbot_location_responses))
                                         responded=True
                                         break
@@ -248,6 +259,12 @@ while(finalEnd):
                                         print(random.choice(chatbot_dev_responses))
                                         responded=True
                                         break
+                                for chatbot_occupation_intent in chatbot_occupation_intents:
+                                    if word2 == chatbot_occupation_intent and responded==False:
+                                        print("Dream: "+random.choice(chatbot_occupation_responses))
+                                        responded=True
+                                        break
+
                                 # break
                                 
             for greeting_intent in greeting_intents:
