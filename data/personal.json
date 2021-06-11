@@ -1,8 +1,8 @@
 {
-  "fname": "J",
-  "lname": "J",
-  "age": "12",
+  "fname": "test",
+  "lname": "testLast",
+  "age": "1",
   "sex": "male",
-  "location": "usa",
-  "occupation": "go to school"
+  "location": "guyana",
+  "occupation": "nothing"
 }

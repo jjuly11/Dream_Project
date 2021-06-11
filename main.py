@@ -1,4 +1,5 @@
 #!/bin/env python3
+#Developer: Joel July
 import json
 import os
 from nltk.tokenize import word_tokenize
@@ -23,7 +24,7 @@ finalEnd=True
 
 # All intents 
 question_intents = ["who","what","wht","whay","/","qhat","ehat","shat","where","qhere","ehere","shere","wher","there","how","when","?", "wat","wen"]
-non_personal_intents=["you","your","them","it"]
+non_personal_intents=["you","y0u","y0ur","your","them","it"]
 user_personal_intents=["my","me","i","mine","am","user","use"]
 
 # --User Intents
@@ -40,7 +41,7 @@ chatbot_name_intents=["name","bame","name?","name/","vame","hame","title","title
 chatbot_age_intents=["age","age/","age?","years","years/","years?","year","year/","year?","year>","year\\","old","0ld","old?","old/","old\"","aged","aged?","aged/","living","living?","living/","?","/"]
 chatbot_location_intents=["location","locati0n","locati0n?","locati0n/","location?","location/","residence","residence?","residence/","live","live?","live/","living","place","stay","staying","where","found","?","/"]
 chatbot_sex_intents=["gender","sex","sexual","orientation","?","/"]
-chatbot_dev_intents=["dev","devs","div","sev","fev","xev","developers","developer","maker","creator","father","mother","?","/"]
+chatbot_dev_intents=["dev","devs","div","sev","fev","xev","developers","developer","devel0p","develop","devel0per","devel0pers","maker","creator","creat0r","creat0rs","creators","father","mother","source","s0urce","?","/"]
 chatbot_occupation_intents=["do","do?","do/","d0","d0?","d0/","work","work?","work/","w0rk","w0rk?","w0rk/","occupation","0ccupation","function","function?","function/","functi0n?","functi0n/","job","j0b","?","/"]
 
 
@@ -54,37 +55,33 @@ end_intents = ["end", "goodbye","bye","later","until","exit"]
 
 
 # Class for user data (Pending usage).
-# class person():
-#     def __init__(self, fname, lname, age, sex, location, occupation):
-#         self.fname = fname
-#         self.lname = lname
-#         self.age = age
-#         self.sex = sex
-#         self.location = location
-#         self.job = occupation
+class userData:
+    # Function Collects user information and stores in dictionary(user).
+    def getUserData(this):
+        '''
+            This is a function that will prompt the user for thier personal information and store that information in the user dictionary defined at the beginning of the module.
+        '''
+        # Gather user data
+        user['fname'] = input("Dream: What is Your First Name? \nUser:")
+        user['lname'] = input("Dream: What is your Last Name? \nUser: ")
+        user['age'] = input(
+            "Dream: What is your age? \n{} {}: ".format(user['fname'], user['lname']))
+        user['sex'] = input(
+            "Dream: What is your Gender? \n{} {}: ".format(user['fname'], user['lname']))
+        user['location'] = input(
+            "Dream: Where Do you Live? \n{} {}: ".format(user['fname'], user['lname']))
+        user['occupation'] = input(
+            "Dream: What Do You Do For a Living? \n{} {}: ".format(user['fname'], user['lname']))
 
-# Function Collects user information and stores in dictionary(user).
-
-
-def getUserData():
-    '''
-        This is a function that will prompt the user for thier personal information and store that information in the user dictionary defined at the beginning of the module.
-    '''
-    # Gather user data
-    user['fname'] = input("Dream: What is Your First Name? \nUser:")
-    user['lname'] = input("Dream: What is your Last Name? \nUser: ")
-    user['age'] = input(
-        "Dream: What is your age? \n{} {}: ".format(user['fname'], user['lname']))
-    user['sex'] = input(
-        "Dream: What is your Gender? \n{} {}: ".format(user['fname'], user['lname']))
-    user['location'] = input(
-        "Dream: Where Do you Live? \n{} {}: ".format(user['fname'], user['lname']))
-    user['occupation'] = input(
-        "Dream: What Do You Do For a Living? \n{} {}: ".format(user['fname'], user['lname']))
-
-    print("Dream: Thank You For Registering, The System Must Now Be Reset To Save Changes.")
+        print("Dream: Thank You For Registering, The System Must Now Be Reset To Save Changes.")
 
 # This function takes the user information dictionary as an argument and stores it in a json file.
+
+# Create a object for user personal data
+personal = userData()
+
+
+
 
 
 def write_json(user_data):
@@ -100,7 +97,7 @@ def checkForJson():
     if not os.path.exists('data/personal.json'):
         # Path Does Not Exist
         # print("Path Does Not Exist")
-        getUserData()
+        personal.getUserData()
         write_json(user)
         # Exits after initialized.
         print("Thank You For Resistering With Us, The Chatbot must be restarted in order for the data to be applied.")
@@ -181,22 +178,36 @@ print("#########################################################################
 
 # Check if user choice is to setup info or start chatbot.
 if choice == 1:
-    getUserData()
-    write_json(user)
-    
+    # User Re-enter new values for personal data and restarts the system.
+    personal.getUserData()
+    write_json(user)    
     exit()
 
-while(finalEnd):
-    # print("Enter this Loop")
-    responded=False
+# If user enters a number outside of range print and error and exit.
+if choice > 2 or choice < 1:
+    print("########################################################################################################################################################")
+    print("#                                                                                                                                                      #")
+    print("#                                                                                                                                                      #")
+    print("#                                           ERROR: The Value entered out of range of what is offered                                               #")
+    print("#                                                                                                                                                      #")
+    print("#                                                                                                                                                      #")
+    print("########################################################################################################################################################")
+    exit()
 
-    user_query = input("Dream: Ask me something else \n{} {}: ".format(
+
+while(finalEnd):
+    responded=False
+    print("#                                                                                                                                                      #")
+    print("#                                                                                                                                                      #")
+    print("# -Dream: Ask me something else                                                                                                                        #")
+
+    user_query = input("# -{} {}: ".format(
         data['fname'], data['lname']))
+    print("#                                                                                                                                                      #")    
+    print("#------------------------------------------------------------------------------------------------------------------------------------------------------#")
     # normalize text
     user_query = user_query.lower()
-    
-    # print(user_query)
-    # print(user_query == "end")
+
 
     # new_string = user_query.split(' ')
 
@@ -236,7 +247,7 @@ while(finalEnd):
                                     if word2 == name_intent and responded==False:
                                         
                                         # If the user main intention is the name then a responce pertaining to the name is pulled from the name responses list.
-                                        print(random.choice(user_name_responses))
+                                        print("# -"+random.choice(user_name_responses))
                                         responded=True
                                         # After the answer is presented a break out of the loop occurs were the user is once again prompted for their input.
                                         break
@@ -245,25 +256,25 @@ while(finalEnd):
                                 for age_intent in age_intents:
 
                                     if word2 == age_intent and responded==False:
-                                        print(random.choice(user_age_responses))
+                                        print("# -"+random.choice(user_age_responses))
                                         responded=True
                                         break
                                 for location_intent in location_intents:
 
                                     if word2 == location_intent and responded==False:
-                                        print(random.choice(user_location_responses))
+                                        print("# -"+random.choice(user_location_responses))
                                         responded=True
                                         break
                                 for sex_intent in sex_intents:
 
                                     if word2 == sex_intent and responded==False:
-                                        print(random.choice(user_sex_responses))
+                                        print("# -"+random.choice(user_sex_responses))
                                         responded=True
                                         break
                                 for occupation_intent in occupation_intents:
 
                                     if word2 == occupation_intent and responded==False:
-                                        print("Dream: "+random.choice(user_occupation_responses))
+                                        print("# -Dream: "+random.choice(user_occupation_responses))
                                         responded=True
                                         break
                     #The user_non_specific variable refers to things the user would ask the chatbot about itself 
@@ -275,32 +286,32 @@ while(finalEnd):
                                 for chatbot_name_intent in chatbot_name_intents:
                                     
                                     if word2 == chatbot_name_intent and responded==False:
-                                        print(random.choice(chatbot_name_responses))
+                                        print("# -"+random.choice(chatbot_name_responses))
                                         responded=True
                                         break
                                 for chatbot_age_intent in chatbot_age_intents:
                                     if word2 == chatbot_age_intent and responded==False:
-                                        print(random.choice(chatbot_age_responses))
+                                        print("# -"+random.choice(chatbot_age_responses))
                                         responded=True
                                         break
                                 for chatbot_sex_intent in chatbot_sex_intents:
                                     if word2 == chatbot_sex_intent and responded==False:
-                                        print(random.choice(chatbot_sex_responses))
+                                        print("# -"+random.choice(chatbot_sex_responses))
                                         responded=True
                                         break
                                 for chatbot_location_intent in chatbot_location_intents:
                                     if word2 == chatbot_location_intent and responded==False:
-                                        print(random.choice(chatbot_location_responses))
+                                        print("# -"+random.choice(chatbot_location_responses))
                                         responded=True
                                         break
                                 for chatbot_dev_intent in chatbot_dev_intents:
                                     if word2 == chatbot_dev_intent and responded==False:
-                                        print(random.choice(chatbot_dev_responses))
+                                        print("# -"+random.choice(chatbot_dev_responses))
                                         responded=True
                                         break
                                 for chatbot_occupation_intent in chatbot_occupation_intents:
                                     if word2 == chatbot_occupation_intent and responded==False:
-                                        print("Dream: "+random.choice(chatbot_occupation_responses))
+                                        print("# -Dream: "+random.choice(chatbot_occupation_responses))
                                         responded=True
                                         break
 
@@ -309,23 +320,24 @@ while(finalEnd):
             for greeting_intent in greeting_intents:
                 # Handles the Greetings    
                 if char == greeting_intent:
-                    print("Dream: {}".format(random.choice(greeting_responses)))
+                    print("# -Dream: {}".format(random.choice(greeting_responses)))
                     responded=True
                     break
             for end_intent in end_intents:
                 if char == end_intent:
                     # Handles the End greetings
-                    print("Dream: {}".format(random.choice(end_responses)))
+                    print("# -Dream: {}".format(random.choice(end_responses)))
                     responded=True
                     finalEnd=False
                     break
             #breaks the loop if a response is found.
             if(responded):
+                print("#------------------------------------------------------------------------------------------------------------------------------------------------------#")
                 break
         # If the User input is not in the intents or database
         if(responded):
             # print("found response")
             break;
         else:
-            print("Dream: {}".format(random.choice(dont_undestand_responses)))
+            print("# -Dream: {}".format(random.choice(dont_undestand_responses)))
             break
