@@ -2,7 +2,7 @@
 
 This project is a simple chatbot for the user to conduct a conversation with. Althought simple this chatbot nicknamed Dream is robust and is able to handle multi meaning worlds and answer appropriately, If an answer isn't avaliable then it produces a random select message from its database stating that it doesn't understand the query. Dream Has a simple cli that allows the user to enter querys from 5 categories of which the question can be directed to the chatbot or asking the chatbot about the user themself.
 
-##Feature List
+## Feature List
 + Encrypts User Data
 + Is able to carry out a simple simple conversation based on 5 categories.
 + Very lightweight

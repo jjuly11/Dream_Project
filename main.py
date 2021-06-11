@@ -22,7 +22,7 @@ responded=False
 finalEnd=True
 
 # All intents 
-question_intents = ["who","what","wht","qhat","ehat","shat","where","qhere","ehere","shere","wher","there","how","when","?", "wat","wen"]
+question_intents = ["who","what","wht","whay","/","qhat","ehat","shat","where","qhere","ehere","shere","wher","there","how","when","?", "wat","wen"]
 non_personal_intents=["you","your","them","it"]
 user_personal_intents=["my","me","i","mine","am","user","use"]
 
@@ -33,7 +33,7 @@ name_intents = ["name","bame","vame","hame","title","yitle","ritle","call","vall
 age_intents = ["age","years","year","old","aged","living","?","/"]
 sex_intents = ["gender","sex","sexual","orientation","?","/"]
 location_intents = ["location","residence","live","place","stay","staying","found","?","/"]
-occupation_intents = ["do","do?","do/","d0","d0?","d0/","work","work?","work/","w0rk","w0rk?","w0rk/","occupation","0ccupation","function","function?","function/","functi0n?","functi0n/","?","/"]
+occupation_intents = ["do","do?","do/","d0","d0?","d0/","work","work?","work/","w0rk","w0rk?","w0rk/","job","j0b","occupation","0ccupation","function","function?","function/","functi0n?","functi0n/","?","/"]
 
 # --ChatBot Intents
 chatbot_name_intents=["name","bame","name?","name/","vame","hame","title","title?","title?","yitle","ritle","call","vall","xall","label","version","?","/"]
@@ -82,9 +82,7 @@ def getUserData():
     user['occupation'] = input(
         "Dream: What Do You Do For a Living? \n{} {}: ".format(user['fname'], user['lname']))
 
-    # user = person(fname, lname, age, sex, location, occupation)
-
-    # print(user.fname)
+    print("Dream: Thank You For Registering, The System Must Now Be Reset To Save Changes.")
 
 # This function takes the user information dictionary as an argument and stores it in a json file.
 
@@ -97,24 +95,32 @@ def write_json(user_data):
         json.dump(user_data, output, indent=2)
 
 
+def checkForJson():
 # If the file personal.json which is in the data directory exists then this initialization process is skipped.
-if not os.path.exists('data/personal.json'):
-    # Path Does Not Exist
-    # print("Path Does Not Exist")
-    getUserData()
-    write_json(user)
-    # Exits after initialized.
-    exit()
+    if not os.path.exists('data/personal.json'):
+        # Path Does Not Exist
+        # print("Path Does Not Exist")
+        getUserData()
+        write_json(user)
+        # Exits after initialized.
+        print("Thank You For Resistering With Us, The Chatbot must be restarted in order for the data to be applied.")
+        exit()
 
-# If user data is found in the file specified then the data is read a stored in a variable to be used in the module.
+    # If user data is found in the file specified then the data is read a stored in a variable to be used in the module.
+checkForJson()
 
 with open('data/personal.json', 'r') as personal_data:
     # Open For Reading
     data = json.load(personal_data)
-    # print(data)
+    
+
+
+# Setup the Stemmer
 ps = PorterStemmer()
+# Create a empty sting to hold user input.
 user_query = ""
-print(name+"\nVersion: " + str(version))
+# Display the name and version number.
+# print(name+"\nVersion: " + str(version))
 
 # Responses Lists
 # --User
@@ -146,6 +152,39 @@ end_responses = ["Great Talk","GoodBye","Later","Bye","Until we meet again","Lov
 # Don't Understand Responces
 
 dont_undestand_responses = ["I don't understand", "What was that?", "Sorry I don't think i know how to answer that.","Please try again after I have been updated.","Try again, But simpler please","Please ask a easier question","Sorry I Don't Know","My Database Doesn't Contain the answer to that."]
+
+# Starting Interface
+
+print("########################################################################################################################################################")
+print("#                                                                                                                                                      #")
+print("#                                                                                                                                                      #")
+print("#                                                                                                                                                      #")
+print("#                                                                 WELCOME TO DREAM                                                                     #")
+print("#                                                                   Version {}                                                                        #".format(version))
+print("#                                                                                                                                                      #")
+print("#                                                                                                                                                      #")
+print("#                                                                                                                                                      #")
+print("########################################################################################################################################################")
+print("#                                                                                                                                                      #")
+print("#                                                                                                                                                      #")
+print("#                                                         PLEASE CHOOSE FROM THE OPTION BELOW                                                          #")
+print("#                                                                                                                                                      #")
+print("#------------------------------------------------------------------------------------------------------------------------------------------------------#")
+print("#                                                              1) SETUP PERSONAL INFO                                                                  #")
+print("#                                                              2) START THE CHATBOT                                                                    #")
+print("#                                                                                                                                                      #")
+print("#------------------------------------------------------------------------------------------------------------------------------------------------------#")
+choice = int(input("#                                                         ENTER HERE ==> "))
+print("#                                                                                                                                                      #")
+print("#                                                                                                                                                      #")
+print("########################################################################################################################################################")
+
+# Check if user choice is to setup info or start chatbot.
+if choice == 1:
+    getUserData()
+    write_json(user)
+    
+    exit()
 
 while(finalEnd):
     # print("Enter this Loop")
